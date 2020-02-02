@@ -12,7 +12,10 @@
 	"content_scripts": [
 		{
 			"matches": ["https://campuswire.com/c/*"],
-			"js": ["content.js"]
+			"js": [
+				"./vendor/fuse.min.js",
+				"content.js"
+			]
 		}
 	]
 }

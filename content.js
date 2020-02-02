@@ -1,9 +1,6 @@
 
-document.body.style.border = "5px solid green";
-
+// Create post data
 let postData = [];
-
-// Scrape posts
 const postList = document.body.getElementsByClassName("posts-list-wrap")[0];
 for (post of postList.getElementsByClassName("post-preview-wrapper")) {
 	const preview = post.getElementsByClassName("post-preview")[0];
@@ -15,28 +12,51 @@ for (post of postList.getElementsByClassName("post-preview-wrapper")) {
 		.getElementsByClassName("post-text-wrap")[0]
 		.getElementsByClassName("post-text")[0]
 		.innerHTML;
-	postData.push({ title: title, text: text });
+
+	postData.push({
+		post: post,
+		title: title,
+		text: text,
+	});
 }
 
-const filterPosts = (keyword) => {
-	for (post of postList.getElementsByClassName("post-preview-wrapper")) {
-		const preview = post.getElementsByClassName("post-preview")[0];
-		const title = preview
-			.getElementsByClassName("post-title")[0]
-			.getElementsByTagName("H3")[0]
-			.innerHTML;
-		const text = preview
-			.getElementsByClassName("post-text-wrap")[0]
-			.getElementsByClassName("post-text")[0]
-			.innerHTML;
+// Fuzzy search
+const options = {
+	shouldSort: true,
+	threshold: 0.6,
+	location: 0,
+	distance: 100,
+	maxPatternLength: 32,
+	minMatchCharLength: 1,
+	keys: [
+		"title",
+		"text",
+	]
+};
+const fuse = new Fuse(postData, options);
 
-		//put fuzzy check here
-		if (text.includes(keyword) || title.includes(keyword)) {
-			post.style.display = 'block';
-			post.classList.add('d-flex');
-		} else {
-			post.style.display = 'none';
-			post.classList.remove('d-flex');
+/**
+ * Filters posts
+ * @param {*} searchTerms 
+ */
+const filterPosts = (searchTerms) => {
+
+	if (searchTerms == "") {
+		for (post of postData) {
+			post.post.style.display = 'block';
+			post.post.classList.add('d-flex');
+		}
+	} else {
+		const filteredPosts = fuse.search(searchTerms);
+
+		for (post of postData) {
+			post.post.style.display = 'none';
+			post.post.classList.remove('d-flex');
+		}
+
+		for (post of filteredPosts) {
+			post.post.style.display = 'block';
+			post.post.classList.add('d-flex');
 		}
 	}
 }
@@ -53,7 +73,6 @@ searchControl.className = "sidebar-category-wrap d-flex align-items-center searc
 const searchBar = document.createElement("INPUT");
 searchBar.className = "form-control";
 searchBar.addEventListener('input', e => {
-	console.log(searchBar.value);
 	filterPosts(searchBar.value);
 })
 searchControl.appendChild(searchBar);
