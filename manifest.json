@@ -1,0 +1,18 @@
+{
+	"manifest_version": 2,
+	"name": "Campuswire Search",
+	"version": "1.0",
+	"description": "Better campuswire search",
+	"permissions": [
+		"tabs"
+	],
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"content_scripts": [
+		{
+			"matches": ["https://campuswire.com/c/*"],
+			"js": ["content.js"]
+		}
+	]
+}
