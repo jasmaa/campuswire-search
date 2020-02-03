@@ -1,6 +1,6 @@
 # Campuswire Search
 
-![logo](/icons/logo-128.png)
+![logo](/images/screenshot_01.png)
 
 Improved post search for Campuswire
 

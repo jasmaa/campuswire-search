@@ -91,4 +91,4 @@ const loader = setInterval(() => {
 	if (document.body.getElementsByClassName("posts-list-wrap")) {
 		initSearchBar();
 	}
-}, 1_000);
+}, 1000);
