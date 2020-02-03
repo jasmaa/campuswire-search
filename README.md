@@ -1,5 +1,9 @@
 # Campuswire Search
 
+![logo](/icons/logo-128.png)
+
+Improved post search for Campuswire
+
 ## Setup
   - Setting up for development:
     - Chrome
