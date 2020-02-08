@@ -1,6 +1,6 @@
 # Campuswire Search
 
-## **⚠️ Default search has been fixed. Please disable this extension. ⚠️**
+**⚠️ Default search has been fixed. Please disable this extension. ⚠️**
 
 ![logo](/images/screenshot_01.png)
 
